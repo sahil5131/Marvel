@@ -1,6 +1,6 @@
 .container {
     margin: 100px auto;
-    width: 300px;
+    width: 330px;
     background-color: #f5f5f5;
     padding: 20px;
     border-radius: 5px;
@@ -18,9 +18,9 @@
   
   input[type="text"],
   input[type="password"] {
-    width: 100%;
+    width: 95%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border: none;
     border-radius: 3px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -29,6 +29,7 @@
   .btn {
     display: block;
     width: 100%;
+    margin-bottom: 15px;
     background-color: #008CBA;
     color: #fff;
     padding: 10px;

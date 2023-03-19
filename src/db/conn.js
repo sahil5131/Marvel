@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-mongoose.connect("mongodb+srv://pkum4656:<password>@marvel.4abxzxu.mongodb.net/test",{
+mongoose.connect("mongodb://localhost:27017",{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true
@@ -9,4 +9,6 @@ mongoose.connect("mongodb+srv://pkum4656:<password>@marvel.4abxzxu.mongodb.net/t
 }).catch((e)=>{
     console.log("no connection");
 })
+
+export default mongoose;
 

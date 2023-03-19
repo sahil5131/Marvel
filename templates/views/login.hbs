@@ -2,8 +2,7 @@
 <html>
   <head>
     <title>Sign In</title>
-    {{!-- <link rel="stylesheet" type="text/css" href="../../public/css/style.css"> --}}
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
   </head>
   <body>
     <div class="container">
@@ -17,8 +16,10 @@
         <input type="password" id="password" name="password" required>
 
         <input type="submit" value="Sign In" class="btn">
+        <input type="button" onclick="location.href=' register'" value="Register" class="btn" />
+        {{!-- <a class="btn" href="/history" >{{>dateArray[index-1]}}Register</a> --}}
       </form>
     </div>
-    <script src="login.js"></script>
+    {{!-- <script src="login.js"></script> --}}
   </body>
 </html>
