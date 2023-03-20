@@ -1,18 +1,21 @@
 import express from "express";
-import { config } from 'dotenv';
 import path from "path";
 import hbs from "hbs"
+import bodyParser from "body-parser"
+import {mongoose} from "mongoose"
+
+// import main from "./db/atlas.js"
+import user from "./models/register.js";
+
 const app =express();
-
-// import { executeStudentCrudOperations } from "./db/studentsCurd.js";
-// import mongoose from "./db/conn.js";
-// mongoose.connect('uri');
-
-import main from "./db/atlas.js"
-
-import Register from "./models/register.js";
-
 const port = process.env.PORT || 3000;
+
+mongoose.connect('mongodb://localhost:27017/Marvel');
+var db=mongoose.connection;
+db.on('error', console.log.bind(console, "connection error"));
+db.once('open', function(callback){
+    console.log("connection succeeded");
+})
 
 const __dirname=path.resolve();
 // console.log(__dirname);
@@ -24,6 +27,10 @@ const partialsPath = path.join(__dirname, './templates/partials')
 // console.log(partialsPath);
 
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended:true
+}))
 app.use(express.urlencoded({extended:false}));
 
 app.use(express.static(static_path));
@@ -40,33 +47,24 @@ app.get("/register", (req, res)=>{
 })
 
 app.post("/register", async(req, res)=>{
-    try{
-        // res.send(req.body.username);
+    // try{
         const password = req.body.password;
         const confirmpassword = req.body.confirmpassword;
-        if(password===confirmpassword){
-         const marvelUser = new Register({
-            username: req.body.username,
-            email:req.body.email,
-            password:password,
-            confirmpassword:confirmpassword
-         })   
-         const registered = await marvelUser.save();
-         res.status(201).render("login.hbs");
+        if(password === confirmpassword){
+            const users = new user(req.body);
+            db.collection('users').insertOne(users, function(err, collection){
+                if(err) throw err;
+                console.log("record inserted successfully");
+            });
+            return res.redirect('login.hbs');
         }
         else{
-            res.send("password are not matching");
-         }
-        console.log(req.body.username);
-    }
-    catch(error){
-        res.status(400).send(error);
-    }
+            console.log('password not same');
+        }
+        
 })
 
 app.listen(port, ()=>{
     console.log(`server is running at ${port}`)
 })
 
-// config();
-// await executeStudentCrudOperations();

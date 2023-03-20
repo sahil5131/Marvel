@@ -1,10 +1,11 @@
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+
 
 async function main(){
     
-    // const uri = "mongodb+srv://sahil:m9TYbe2nGBMZ5kfd@cluster0.ezx7uw1.mongodb.net/?retryWrites=true&w=majority";
     const uri = "mongodb://localhost:27017/Marvel";
-
+    
     const client = new MongoClient(uri);
 
     try {
