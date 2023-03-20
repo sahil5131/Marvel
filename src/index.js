@@ -6,6 +6,7 @@ import {mongoose} from "mongoose"
 
 // import main from "./db/atlas.js"
 import user from "./models/register.js";
+// import luser from "./models/login.js";
 
 const app =express();
 const port = process.env.PORT || 3000;
@@ -56,12 +57,36 @@ app.post("/register", async(req, res)=>{
                 if(err) throw err;
                 console.log("record inserted successfully");
             });
-            return res.redirect('login.hbs');
+            return res.redirect('marvel');
         }
         else{
             console.log('password not same');
         }
         
+})
+
+app.post('/', function (req, res, next) {
+	//console.log(req.body);
+	User.findOne({username:req.body.username},function(err,data){
+		if(data){
+			
+			if(data.password==req.body.password){
+				console.log("Done Login");
+				req.session.userId = data.unique_id;
+				console.log(req.session.userId);
+				res.send({"Success":"Success!"});
+				res.render('marvel.hbs');
+			}else{
+				res.send({"Success":"Wrong password!"});
+			}
+		}else{
+			res.send({"Success":"This Email Is not regestered!"});
+		}
+	});
+});
+
+app.get('/marvel', (req, res)=>{
+    res.render("marvel.hbs");
 })
 
 app.listen(port, ()=>{
